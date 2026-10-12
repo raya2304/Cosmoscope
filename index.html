@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Cosmoscope is your gateway to planets, galaxies, space missions, and the mysteries of the universe.">
+<title>Cosmoscope | Explore Beyond</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080b13;--panel:#101622;--line:#252c3b;--muted:#929bb0;--accent:#c4f36b}
+*{box-sizing:border-box;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:#f4f5fa;font-family:'DM Sans',sans-serif}
+h1,h2,h3,.brand{font-family:'Space Grotesk',sans-serif}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:#080b13}
+.stars{position:absolute;inset:0;pointer-events:none;overflow:hidden;background-image:radial-gradient(1px 1px at 10% 20%,#fff 99%,transparent),radial-gradient(2px 2px at 80% 15%,#b9c8ff 99%,transparent),radial-gradient(1px 1px at 60% 60%,#fff 99%,transparent),radial-gradient(1px 1px at 35% 80%,#fff 99%,transparent),radial-gradient(2px 2px at 90% 70%,#d6c8ff 99%,transparent),radial-gradient(1px 1px at 20% 65%,#fff 99%,transparent);background-size:340px 260px;opacity:.65}
+.nav-link{color:#a6aec0;transition:.2s}
+.nav-link:hover,.nav-link.active{color:var(--accent)}
+.btn-primary{background:var(--accent);color:#11170a;transition:.25s}
+.btn-primary:hover{background:#d8ff91;transform:translateY(-2px)}
+.btn-outline{border:1px solid #394052;transition:.25s}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.eyebrow{color:var(--accent);font-size:11px;font-weight:700;letter-spacing:2.8px;text-transform:uppercase}
+.hero{background:radial-gradient(ellipse at 72% 46%,#1b2944 0%,#11182a 24%,#080b13 64%)}
+.hero-planet{position:absolute;width:min(43vw,480px);aspect-ratio:1;right:9%;top:50%;transform:translateY(-50%);border-radius:50%;background:radial-gradient(circle at 30% 27%,#d5e5f0 0%,#9eb4cb 9%,#657a9b 24%,#34435f 47%,#182339 70%,#080b13 100%);box-shadow:inset -45px -24px 85px #050812,0 0 80px #536d9b22;overflow:hidden}
+.hero-planet:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(165deg,transparent 0 22px,#c4d4e022 24px 29px,transparent 32px 47px);border-radius:50%;transform:rotate(-12deg)}
+.hero-planet:after{content:"";position:absolute;inset:12%;border-radius:50%;box-shadow:inset -28px -20px 45px #030611}
+.orbit{position:absolute;width:125%;height:35%;left:-12%;top:35%;border:1px solid #d6e4f555;border-radius:50%;transform:rotate(-24deg)}
+.orbit:after{content:"";position:absolute;right:8%;top:13%;width:10px;height:10px;background:var(--accent);border-radius:50%;box-shadow:0 0 15px var(--accent)}
+.hero-glow{position:absolute;width:420px;height:420px;border-radius:50%;background:#8ba9ff0c;filter:blur(55px);right:7%;top:15%}
+.glass{background:linear-gradient(145deg,#151c2a,#0d121d);border:1px solid #ffffff0d}
+.planet-art{height:175px;position:relative;overflow:hidden;background:radial-gradient(ellipse at center,#1b2638,#0d111b 70%)}
+.planet{position:absolute;width:105px;height:105px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;box-shadow:inset -17px -9px 22px #05081188}
+.planet:after{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(170deg,transparent 0 10px,#ffffff13 11px 14px,transparent 15px 23px)}
+.mercury{background:radial-gradient(circle at 32% 27%,#c7c1b7,#777b83 46%,#363e4c 80%)}
+.venus{background:radial-gradient(circle at 30% 25%,#f5d2a2,#bd8354 45%,#633d38)}
+.earth{background:radial-gradient(circle at 30% 28%,#9edfff,#257cc5 38%,#144274 75%)}
+.earth:before{content:"";position:absolute;inset:18%;border-radius:40% 55% 30% 60%;background:#73b78c;transform:rotate(28deg);filter:blur(1px)}
+.mars{background:radial-gradient(circle at 30% 25%,#ffc39c,#d46b4e 45%,#6e302b)}
+.jupiter{background:repeating-linear-gradient(175deg,#e8d1ad 0 10px,#a66d53 11px 19px,#f0d8b7 20px 26px,#7b5346 27px 33px);background-color:#bd967a}
+.saturn{background:radial-gradient(circle at 30% 25%,#f4dfb4,#bfa171 50%,#6b5945)}
+.saturn:before{content:"";position:absolute;width:155px;height:38px;left:-25px;top:35px;border:7px solid #d5bd9366;border-radius:50%;transform:rotate(-22deg);z-index:2}
+.planet-card{transition:transform .3s,border-color .3s}
+.planet-card:hover{transform:translateY(-5px);border-color:#c4f36b55}
+.mission-art{height:160px;position:relative;overflow:hidden}
+.mission-art img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.mission-card:hover img{transform:scale(1.06)}
+.mission-card{overflow:hidden;transition:border-color .25s}
+.mission-card:hover{border-color:#c4f36b66}
+.fact-number{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,3vw,40px);font-weight:600;letter-spacing:-2px}
+.section-label{font-size:11px;letter-spacing:2px;color:#929bb0;text-transform:uppercase}
+#menu{display:none}
+#menu.open{display:flex}
+#factText{transition:opacity .2s}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:767px){.hero-planet{width:280px;right:-90px;top:32%;opacity:.45}.hero-copy{position:relative;z-index:2}.hero{min-height:690px}.hero h1{font-size:52px}.planet-art{height:145px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="sticky top-0 z-50 border-b border-white/5 bg-[#080b13]/90 backdrop-blur-xl">
+<div class="max-w-7xl mx-auto px-5 md:px-10 h-[76px] flex items-center justify-between">
+<a href="#home" class="brand flex items-center gap-3 text-xl font-bold tracking-tight"><span class="w-9 h-9 rounded-xl bg-[#c4f36b] text-[#10150a] flex items-center justify-center text-xl">✳</span>cosmoscope<span class="text-[#c4f36b]">.</span></a>
+<nav class="hidden md:flex items-center gap-8 text-sm">
+<a class="nav-link active" href="#home">Home</a><a class="nav-link" href="#planets">Planets</a><a class="nav-link" href="#missions">Missions</a><a class="nav-link" href="#discover">Discover</a>
+</nav>
+<a href="#missions" class="hidden md:inline-flex btn-primary rounded-full px-5 py-3 text-sm font-bold">Explore universe ↗</a>
+<button id="menuBtn" class="md:hidden border border-white/15 rounded-lg px-3 py-2" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+</div>
+<nav id="menu" class="flex-col gap-5 px-6 pb-6 text-sm md:hidden">
+<a href="#home">Home</a><a href="#planets">Planets</a><a href="#missions">Missions</a><a href="#discover">Discover</a>
+</nav>
+</header>
+
+<main>
+<section id="home" class="hero relative overflow-hidden min-h-[650px] md:min-h-[700px] flex items-center">
+<div class="stars"></div><div class="hero-glow"></div><div class="hero-planet"><div class="orbit"></div></div>
+<div class="max-w-7xl mx-auto w-full px-5 md:px-10 py-20 relative z-10">
+<div class="hero-copy max-w-[650px]">
+<div class="eyebrow flex items-center gap-3 mb-7"><span class="w-8 h-px bg-[#c4f36b]"></span> Your universe, unexplored</div>
+<h1 class="text-6xl md:text-8xl font-semibold leading-[1.02] tracking-[-4px] mb-7">Look beyond.<br>Find <span class="text-[#c4f36b]">infinite.</span></h1>
+<p class="text-[#a5aec1] text-base md:text-lg leading-8 max-w-lg mb-9">A journey through distant worlds, cosmic wonders, and the discoveries that change how we see our place in the universe.</p>
+<div class="flex flex-wrap gap-4"><a href="#planets" class="btn-primary px-7 py-4 rounded-full text-sm font-bold">Start exploring <span class="ml-2">↗</span></a><a href="#discover" class="btn-outline px-7 py-4 rounded-full text-sm font-semibold">Discover the cosmos</a></div>
+<div class="mt-14 flex flex-wrap gap-x-8 gap-y-4 text-xs text-[#9099ad]"><span>✳ &nbsp; Space for everyone</span><span>◉ &nbsp; Discover something new</span></div>
+</div>
+</div>
+<div class="absolute bottom-7 left-1/2 -translate-x-1/2 text-[#778197] text-xs tracking-[3px] hidden md:block">SCROLL TO EXPLORE ↓</div>
+</section>
+
+<section class="border-y border-white/5 bg-[#0c111b]">
+<div class="max-w-7xl mx-auto px-5 md:px-10 py-7 grid grid-cols-2 md:grid-cols-4 gap-7">
+<div><p class="section-label mb-2">Our solar system</p><p class="fact-number">8 <span class="text-sm font-normal text-[#929bb0] tracking-normal">planets</span></p></div>
+<div><p class="section-label mb-2">Our galaxy</p><p class="fact-number">100B+ <span class="text-sm font-normal text-[#929bb0] tracking-normal">stars*</span></p></div>
+<div><p class="section-label mb-2">Our universe</p><p class="fact-number">13.8B <span class="text-sm font-normal text-[#929bb0] tracking-normal">years*</span></p></div>
+<div><p class="section-label mb-2">Curiosity level</p><p class="fact-number text-[#c4f36b]">∞ <span class="text-sm font-normal text-[#929bb0] tracking-normal">possibilities</span></p></div>
+</div>
+</section>
+
+<section id="planets" class="py-24 md:py-28">
+<div class="max-w-7xl mx-auto px-5 md:px-10">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 reveal">
+<div><p class="eyebrow mb-4">01 / The neighbourhood</p><h2 class="text-4xl md:text-5xl font-semibold tracking-tight">Meet our <span class="text-[#c4f36b]">planets.</span></h2><p class="text-[#929bb0] mt-4 leading-7 max-w-xl">Eight worlds. Eight personalities. One extraordinary solar system.</p></div>
+<p class="text-sm text-[#929bb0]">Select a planet to learn more ↘</p>
+</div>
+<div id="planetGrid" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+<div class="glass planet-card rounded-2xl overflow-hidden cursor-pointer" tabindex="0" role="button" data-planet="Mercury"><div class="planet-art"><div class="planet mercury"></div></div><div class="p-5"><p class="section-label">01 / Terrestrial</p><h3 class="text-xl font-semibold mt-2">Mercury</h3><p class="text-xs text-[#929bb0] mt-2">The swiftest planet</p><p class="text-xs text-[#c4f36b] mt-4">Explore planet ↗</p></div></div>
+<div class="glass planet-card rounded-2xl overflow-hidden cursor-pointer" tabindex="0" role="button" data-planet="Venus"><div class="planet-art"><div class="planet venus"></div></div><div class="p-5"><p class="section-label">02 / Terrestrial</p><h3 class="text-xl font-semibold mt-2">Venus</h3><p class="text-xs text-[#929bb0] mt-2">The hottest world</p><p class="text-xs text-[#c4f36b] mt-4">Explore planet ↗</p></div></div>
+<div class="glass planet-card rounded-2xl overflow-hidden cursor-pointer" tabindex="0" role="button" data-planet="Earth"><div class="planet-art"><div class="planet earth"></div></div><div class="p-5"><p class="section-label">03 / Terrestrial</p><h3 class="text-xl font-semibold mt-2">Earth</h3><p class="text-xs text-[#929bb0] mt-2">Our pale blue home</p><p class="text-xs text-[#c4f36b] mt-4">Explore planet ↗</p></div></div>
+<div class="glass planet-card rounded-2xl overflow-hidden cursor-pointer" tabindex="0" role="button" data-planet="Mars"><div class="planet-art"><div class="planet mars"></div></div><div class="p-5"><p class="section-label">04 / Terrestrial</p><h3 class="text-xl font-semibold mt-2">Mars</h3><p class="text-xs text-[#929bb0] mt-2">The red planet</p><p class="text-xs text-[#c4f36b] mt-4">Explore planet ↗</p></div></div>
+<div class="glass planet-card rounded-2xl overflow-hidden cursor-pointer" tabindex="0" role="button" data-planet="Jupiter"><div class="planet-art"><div class="planet jupiter"></div></div><div class="p-5"><p class="section-label">05 / Gas giant</p><h3 class="text-xl font-semibold mt-2">Jupiter</h3><p class="text-xs text-[#929bb0] mt-2">King of the planets</p><p class="text-xs text-[#c4f36b] mt-4">Explore planet ↗</p></div></div>
+<div class="glass planet-card rounded-2xl overflow-hidden cursor-pointer" tabindex="0" role="button" data-planet="Saturn"><div class="planet-art"><div class="planet saturn"></div></div><div class="p-5"><p class="section-label">06 / Gas giant</p><h3 class="text-xl font-semibold mt-2">Saturn</h3><p class="text-xs text-[#929bb0] mt-2">A world of rings</p><p class="text-xs text-[#c4f36b] mt-4">Explore planet ↗</p></div></div>
+<div class="glass planet-card rounded-2xl overflow-hidden cursor-pointer" tabindex="0" role="button" data-planet="Uranus"><div class="planet-art"><div class="planet" style="background:radial-gradient(circle at 30% 25%,#c4fff7,#63b7c4 50%,#2d687c)"></div></div><div class="p-5"><p class="section-label">07 / Ice giant</p><h3 class="text-xl font-semibold mt-2">Uranus</h3><p class="text-xs text-[#929bb0] mt-2">The tilted world</p><p class="text-xs text-[#c4f36b] mt-4">Explore planet ↗</p></div></div>
+<div class="glass planet-card rounded-2xl overflow-hidden cursor-pointer" tabindex="0" role="button" data-planet="Neptune"><div class="planet-art"><div class="planet" style="background:radial-gradient(circle at 30% 25%,#90c9ff,#3159c8 50%,#171d69)"></div></div><div class="p-5"><p class="section-label">08 / Ice giant</p><h3 class="text-xl font-semibold mt-2">Neptune</h3><p class="text-xs text-[#929bb0] mt-2">The distant blue world</p><p class="text-xs text-[#c4f36b] mt-4">Explore planet ↗</p></div></div>
+</div>
+<div id="planetDetails" class="hidden mt-6 glass rounded-2xl p-6 md:p-8">
+<div class="flex justify-between gap-4 items-start"><div><p class="eyebrow">Planet explorer</p><h3 id="planetTitle" class="text-2xl font-semibold mt-2"></h3></div><button id="closePlanet" class="text-[#929bb0] text-2xl" aria-label="Close planet details">×</button></div>
+<p id="planetDescription" class="text-[#b3bdce] leading-7 mt-4 max-w-3xl"></p><div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6"><div class="bg-white/5 p-4 rounded-xl"><p class="section-label">Distance from Sun</p><p id="planetDistance" class="font-semibold mt-2"></p></div><div class="bg-white/5 p-4 rounded-xl"><p class="section-label">Length of year</p><p id="planetYear" class="font-semibold mt-2"></p></div><div class="bg-white/5 p-4 rounded-xl col-span-2 md:col-span-1"><p class="section-label">Known moons</p><p id="planetMoons" class="font-semibold mt-2"></p></div></div>
+</div>
+</div>
+</section>
+
+<section id="missions" class="py-24 bg-[#0c111b] border-y border-white/5">
+<div class="max-w-7xl mx-auto px-5 md:px-10">
+<div class="mb-12 reveal"><p class="eyebrow mb-4">02 / Humanity out there</p><h2 class="text-4xl md:text-5xl font-semibold tracking-tight">Missions that <span class="text-[#c4f36b]">matter.</span></h2><p class="text-[#929bb0] mt-4 max-w-xl leading-7">From ancient craters to the edge of our solar system, discovery never stops.</p></div>
+<div class="grid md:grid-cols-3 gap-5">
+<article class="mission-card glass rounded-2xl reveal"><div class="mission-art"><img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=85" alt="Earth viewed from space" loading="lazy"><span class="absolute top-4 left-4 bg-[#c4f36b] text-[#10150a] text-[10px] tracking-widest font-bold px-3 py-2 rounded-full">EARTH ORBIT</span></div><div class="p-6"><p class="section-label">01 / Our home</p><h3 class="text-2xl font-semibold mt-3">International Space Station</h3><p class="text-sm text-[#929bb0] leading-6 mt-3">A unique orbital laboratory where astronauts from different nations live and work together in microgravity.</p><a href="https://www.nasa.gov/international-space-station/" target="_blank" rel="noopener noreferrer" class="inline-block text-sm text-[#c4f36b] mt-6">Discover the mission ↗</a></div></article>
+<article class="mission-card glass rounded-2xl reveal"><div class="mission-art"><img src="https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&fit=crop&w=900&q=85" alt="Mars-inspired red planetary landscape" loading="lazy"><span class="absolute top-4 left-4 bg-white/10 backdrop-blur text-white text-[10px] tracking-widest font-bold px-3 py-2 rounded-full">MARS EXPLORATION</span></div><div class="p-6"><p class="section-label">02 / The red planet</p><h3 class="text-2xl font-semibold mt-3">Perseverance Rover</h3><p class="text-sm text-[#929bb0] leading-6 mt-3">NASA's rover investigates ancient Martian environments and collects samples to help us understand the planet's past.</p><a href="https://science.nasa.gov/mission/mars-2020-perseverance/" target="_blank" rel="noopener noreferrer" class="inline-block text-sm text-[#c4f36b] mt-6">Discover the mission ↗</a></div></article>
+<article class="mission-card glass rounded-2xl reveal"><div class="mission-art"><img src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?auto=format&fit=crop&w=900&q=85" alt="Satellite and Earth from orbit" loading="lazy"><span class="absolute top-4 left-4 bg-white/10 backdrop-blur text-white text-[10px] tracking-widest font-bold px-3 py-2 rounded-full">DEEP SPACE</span></div><div class="p-6"><p class="section-label">03 / Cosmic origins</p><h3 class="text-2xl font-semibold mt-3">James Webb Telescope</h3><p class="text-sm text-[#929bb0] leading-6 mt-3">Observing the universe in infrared, Webb helps scientists study early galaxies, stars, and the atmospheres of distant worlds.</p><a href="https://science.nasa.gov/mission/webb/" target="_blank" rel="noopener noreferrer" class="inline-block text-sm text-[#c4f36b] mt-6">Discover the mission ↗</a></div></article>
+</div>
+</div>
+</section>
+
+<section id="discover" class="py-24 md:py-28">
+<div class="max-w-7xl mx-auto px-5 md:px-10">
+<div class="grid lg:grid-cols-2 gap-12 items-center">
+<div class="reveal"><p class="eyebrow mb-4">03 / A moment of wonder</p><h2 class="text-4xl md:text-6xl font-semibold leading-tight tracking-tight">The universe is full of <span class="text-[#c4f36b]">surprises.</span></h2><p class="text-[#929bb0] leading-7 mt-6 max-w-lg">Every answer leads to another question. Take a moment to explore the strange, beautiful facts that make our cosmos so extraordinary.</p><div class="mt-8 flex items-center gap-4"><div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-2xl">✳</div><div><p class="font-semibold">Your daily dose of space</p><p class="text-xs text-[#929bb0] mt-1">A little wonder goes a long way.</p></div></div></div>
+<div class="glass rounded-3xl p-7 md:p-10 reveal"><p class="section-label">COSMIC FACT GENERATOR</p><div class="min-h-[190px] flex flex-col justify-center"><span id="factCount" class="text-xs text-[#c4f36b] tracking-widest mb-5">FACT 01 / 06</span><h3 id="factText" class="text-2xl md:text-3xl font-medium leading-relaxed">A day on Venus is longer than its year.</h3><p id="factDesc" class="text-sm text-[#929bb0] leading-6 mt-4">Venus takes about 243 Earth days to rotate once, but only about 225 Earth days to orbit the Sun.</p></div><div class="flex items-center justify-between border-t border-white/10 pt-6 mt-5"><span class="text-xs text-[#929bb0]">Curiosity, one fact at a time.</span><button id="nextFact" class="btn-primary rounded-full px-5 py-3 text-sm font-bold">Next fact →</button></div></div>
+</div>
+</div>
+</section>
+
+<section class="pb-24">
+<div class="max-w-7xl mx-auto px-5 md:px-10">
+<div class="relative overflow-hidden rounded-3xl border border-white/10 bg-[#121a26] p-8 md:p-14">
+<div class="stars"></div><div class="relative z-10 max-w-2xl"><p class="eyebrow mb-5">Your journey starts here</p><h2 class="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">Stay curious.<br><span class="text-[#c4f36b]">Keep looking up.</span></h2><p class="text-[#a3adbf] leading-7 mt-5 max-w-lg">The cosmos is not just somewhere far away. It's the story of where we came from and what we might discover next.</p><a href="#home" class="inline-flex btn-primary rounded-full px-7 py-4 text-sm font-bold mt-8">Back to the beginning ↑</a></div><div class="absolute right-[-50px] bottom-[-120px] w-80 h-80 rounded-full border border-white/10 hidden md:block"></div><div class="absolute right-[-10px] bottom-[-80px] w-60 h-60 rounded-full border border-white/10 hidden md:block"></div></div>
+</div>
+</section>
+</main>
+
+<footer class="border-t border-white/5">
+<div class="max-w-7xl mx-auto px-5 md:px-10 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+<a href="#home" class="brand flex items-center gap-2 text-lg font-bold"><span class="text-[#c4f36b]">✳</span> cosmoscope.</a>
+<p class="text-xs text-[#929bb0]">Made for the curious. Inspired by the infinite.</p>
+<div class="flex gap-5 text-xs text-[#929bb0]"><a href="#planets" class="hover:text-[#c4f36b]">Planets</a><a href="#missions" class="hover:text-[#c4f36b]">Missions</a><a href="https://science.nasa.gov/" target="_blank" rel="noopener noreferrer" class="hover:text-[#c4f36b]">NASA ↗</a></div>
+</div>
+<div class="text-center text-[11px] text-[#677187] pb-6">© <span id="year"></span> Cosmoscope. An educational space exploration concept.</div>
+</footer>
+
+<script>
+const planetData={
+Mercury:{description:"Mercury is the smallest planet in our solar system and the closest to the Sun. Its heavily cratered surface resembles Earth's Moon, and its temperatures swing dramatically between day and night.",distance:"57.9 million km",year:"88 Earth days",moons:"0"},
+Venus:{description:"Venus is wrapped in a thick atmosphere rich in carbon dioxide. Its runaway greenhouse effect makes it the hottest planet, even though Mercury is closer to the Sun.",distance:"108.2 million km",year:"225 Earth days",moons:"0"},
+Earth:{description:"Our home is the only world currently known to support life. Liquid water covers most of its surface, while its atmosphere and magnetic field help protect living things.",distance:"149.6 million km",year:"365.25 days",moons:"1"},
+Mars:{description:"Mars is a cold desert world with ancient river valleys, enormous volcanoes, and polar ice caps. Scientists investigate whether microbial life could once have existed there.",distance:"227.9 million km",year:"687 Earth days",moons:"2"},
+Jupiter:{description:"Jupiter is the largest planet in the solar system. This gas giant has powerful storms, including the Great Red Spot, and a fascinating family of moons such as Europa and Ganymede.",distance:"778.6 million km",year:"11.86 Earth years",moons:"95 confirmed"},
+Saturn:{description:"Saturn is famous for its spectacular rings made mostly of ice and rocky particles. It is a gas giant with intriguing moons, including Titan and the ocean-bearing Enceladus.",distance:"1.43 billion km",year:"29.4 Earth years",moons:"274 confirmed"},
+Uranus:{description:"Uranus is an ice giant that rotates on its side, giving it extreme seasonal variations. Its blue-green colour comes from methane in its atmosphere.",distance:"2.87 billion km",year:"84 Earth years",moons:"28 confirmed"},
+Neptune:{description:"Neptune is a distant ice giant with powerful winds and a deep blue appearance. Its large moon Triton travels in a retrograde orbit and may have originated in the Kuiper Belt.",distance:"4.50 billion km",year:"165 Earth years",moons:"16 confirmed"}
+};
+const detailPanel=document.getElementById("planetDetails");
+function showPlanet(name){
+const p=planetData[name];if(!p)return;
+document.getElementById("planetTitle").textContent=name;
+document.getElementById("planetDescription").textContent=p.description;
+document.getElementById("planetDistance").textContent=p.distance;
+document.getElementById("planetYear").textContent=p.year;
+document.getElementById("planetMoons").textContent=p.moons;
+detailPanel.classList.remove("hidden");
+detailPanel.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+document.querySelectorAll("[data-planet]").forEach(card=>{
+card.addEventListener("click",()=>showPlanet(card.dataset.planet));
+card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();showPlanet(card.dataset.planet)}});
+});
+document.getElementById("closePlanet").addEventListener("click",()=>detailPanel.classList.add("hidden"));
+const facts=[
+{title:"A day on Venus is longer than its year.",desc:"Venus takes about 243 Earth days to rotate once, but only about 225 Earth days to orbit the Sun."},
+{title:"Neutron stars can spin incredibly fast.",desc:"Some neutron stars rotate hundreds of times per second. These dense stellar remnants pack more mass than the Sun into a city-sized object."},
+{title:"Footprints on the Moon can last a very long time.",desc:"Without wind or flowing water to erase them, lunar footprints can remain preserved for millions of years, although micrometeorite impacts gradually change the surface."},
+{title:"Sunlight takes about eight minutes to reach Earth.",desc:"Light travels at roughly 300,000 kilometres per second. The Sun is about 150 million kilometres away on average."},
+{title:"Saturn's average density is lower than water's.",desc:"Saturn's average density is about 0.69 grams per cubic centimetre. The familiar floating-in-water comparison is hypothetical because no ocean could hold a planet-sized Saturn."},
+{title:"There are more stars than we can count individually.",desc:"The observable universe likely contains an enormous number of stars across billions of galaxies. Astronomers estimate these numbers rather than counting each star."}
+];
+let factIndex=0;
+document.getElementById("nextFact").addEventListener("click",()=>{
+factIndex=(factIndex+1)%facts.length;
+const title=document.getElementById("factText"),desc=document.getElementById("factDesc");
+title.style.opacity=0;desc.style.opacity=0;
+setTimeout(()=>{
+title.textContent=facts[factIndex].title;
+desc.textContent=facts[factIndex].desc;
+document.getElementById("factCount").textContent="FACT "+String(factIndex+1).padStart(2,"0")+" / "+String(facts.length).padStart(2,"0");
+title.style.opacity=1;desc.style.opacity=1;
+},180);
+});
+const menuBtn=document.getElementById("menuBtn"),menu=document.getElementById("menu");
+menuBtn.addEventListener("click",()=>{
+const opened=menu.classList.toggle("open");
+menuBtn.setAttribute("aria-expanded",String(opened));
+menuBtn.textContent=opened?"✕":"☰";
+});
+menu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{
+menu.classList.remove("open");menuBtn.setAttribute("aria-expanded","false");menuBtn.textContent="☰";
+}));
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}});
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+const sections=document.querySelectorAll("main section[id]");
+const navLinks=document.querySelectorAll("header .nav-link");
+const navObserver=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){navLinks.forEach(link=>link.classList.toggle("active",link.getAttribute("href")==="#"+entry.target.id))}
+});
+},{rootMargin:"-30% 0px -60% 0px"});
+sections.forEach(section=>navObserver.observe(section));
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
